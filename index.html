@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BDT FUTURE SIGNAL</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #1e3c72, #2a5298); /* Dark blue gradient */
+        color: #fff;
+        min-height: 100vh;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.8rem;
+        margin-top: 40px;
+        font-weight: 700;
+        background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 40px;
+        background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        display: none; /* Hidden initially */
+      }
+
+      .card {
+        background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+        padding: 30px;
+        margin-top: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .card select,
+      .card input,
+      .card button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+      }
+
+      .card input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .card select:hover,
+      .card input:hover,
+      .card button:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      .card button {
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        color: white;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .card button:hover {
+        background: linear-gradient(45deg, #2575fc, #6a11cb);
+        transform: translateY(-3px);
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+        color: #fff;
+      }
+
+      .signal-list {
+        margin-top: 20px;
+        padding-left: 20px;
+      }
+
+      .signal-list li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+        color: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.1);
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animation-message {
+        display: none;
+        padding: 12px;
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        color: white;
+        border-radius: 8px;
+        font-weight: 600;
+        text-align: center;
+        margin-top: 20px;
+        animation: fadeOut 2s forwards;
+      }
+
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      /* Footer Styles */
+      footer {
+        background-color: rgba(0, 0, 0, 0.2);
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        bottom: 0;
+        width: 100%;
+      }
+
+      footer a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      .footer-text {
+        font-size: 1rem;
+        color: white;
+        font-weight: 400;
+      }
+
+      /* Advanced Loader styles */
+      .loader {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .loader .spinner {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 6px solid transparent;
+        border-top-color: #6a11cb;
+        border-bottom-color: #2575fc;
+        animation: spin 1.5s linear infinite;
+      }
+
+      .loader p {
+        margin-top: 20px;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.5;
+        }
+      }
+
+      /* Login Page styles */
+      .login-container {
+        max-width: 400px;
+        margin: 100px auto;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        backdrop-filter: blur(10px);
+      }
+
+      .login-container h1 {
+        font-size: 2.2rem;
+        background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+      }
+
+      .login-container input {
+        margin-top: 20px;
+        padding: 14px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-size: 1rem;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        box-sizing: border-box;
+      }
+
+      .login-container button {
+        margin-top: 20px;
+        padding: 14px;
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        color: white;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+
+      .login-container button:hover {
+        background: linear-gradient(45deg, #2575fc, #6a11cb);
+        transform: translateY(-3px);
+      }
+
+      /* Copy Button Styles */
+      .copy-button {
+        margin-top: 20px;
+        padding: 14px;
+        background: linear-gradient(45deg, #28a745, #218838);
+        color: white;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+
+      .copy-button:hover {
+        background: linear-gradient(45deg, #218838, #28a745);
+        transform: translateY(-3px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Login Page -->
+    <div class="login-container" id="login-page">
+      <img src="https://i.ibb.co/h19MmzKV/OIG1-1.jpg" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 20px;">
+      <h1>AI FUTURE SIGNAL BOT</h1>
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <!-- Advanced Loader -->
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      <p>Mostafizur Find Signals...</p>
+    </div>
+
+    <!-- Main Page (Hidden Initially) -->
+    <div class="container" id="main-page">
+      <h1>MNRN COLOUR TREADING BOT</h1>
+      <div class="card">
+        <h2 class="section-title">Ai Future Signals</h2>
+        <div>
+          <label for="asset-select">Select Lottery</label>
+          <select id="asset-select">
+            <option value="TRX WIN 1 MINUTE">TRX WIN 1 MINUTE</option>
+            <option value="WIN-GO 1 MINUTE">WIN-GO 1 MINUTE</option>
+          </select>
+        </div>
+        <div>
+          <label for="accuracy-select">Select Accuracy</label>
+          <select id="accuracy-select">
+            <option value="90">90%</option>
+            <option value="95">95%</option>
+            <option value="99">99%</option>
+          </select>
+        </div>
+        <div>
+          <label for="signal-count">Number of Signals</label>
+          <input type="number" id="signal-count" value="10" min="1" max="30" />
+        </div>
+        <div>
+          <label for="filter-select">Signal Type</label>
+          <select id="filter-select">
+            <option value="ALL">All</option>
+            <option value="CALL">SMALL</option>
+            <option value="PUT">BIG</option>
+          </select>
+        </div>
+        <button id="generate-signals">GENERATE</button>
+      </div>
+
+      <div class="signal-list" id="signal-list"></div>
+      <button class="copy-button" id="copy-button" style="display: none;">Copy Signals</button>
+      <div class="animation-message"> Future Signals generated successfully!</div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p class="footer-text">
+        &copy;@2025 MOSTAFIZUR COLOUR_TREAD BOT |
+        <a href="https://t.me/bdtgamef" target="_blank"
+          >Join Our Telegram</a
+        >
+      </p>
+    </footer>
+
+    <script>
+      // Function to play sound
+      function playSound() {
+        const audio = new Audio("sound.mp3"); // Path to your sound file
+        audio.play();
+      }
+
+      // Login Button
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          playSound(); // Play sound on login button click
+
+          // Simple login validation (this can be expanded as needed)
+          var username = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
+
+          if (username === "MOSTAFIZUR" && password === "@imran@92134653@") {
+            // Show main page and hide login page
+            document.getElementById("login-page").style.display = "none";
+            document.getElementById("main-page").style.display = "block";
+          } else {
+            alert("Invalid username or password");
+          }
+        });
+
+      // Generate Signals Button
+      document
+        .getElementById("generate-signals")
+        .addEventListener("click", function () {
+          playSound(); // Play sound on generate signals button click
+
+          // Show the loader
+          document.getElementById("loader").style.display = "flex";
+
+          // Hide the previous messages and clear the signal list
+          document.querySelector(".animation-message").style.display = "none";
+          document.getElementById("signal-list").innerHTML = "";
+          document.getElementById("copy-button").style.display = "none";
+
+          setTimeout(function () {
+            generateSignals();
+            // Hide the loader after signals are generated
+            document.getElementById("loader").style.display = "none";
+            document.querySelector(".animation-message").style.display =
+              "block";
+            document.getElementById("copy-button").style.display = "block";
+          }, 3000); // Loader display time is now 3 seconds
+        });
+
+      // Copy Signals Button
+      document
+        .getElementById("copy-button")
+        .addEventListener("click", function () {
+          playSound(); // Play sound on copy signals button click
+
+          const signalList = document.getElementById("signal-list");
+          const signals = Array.from(signalList.children).map(
+            (li) => li.textContent
+          );
+          const signalsText = signals.join("\n");
+
+          navigator.clipboard
+            .writeText(signalsText)
+            .then(() => {
+              alert("Signals copied to clipboard!");
+            })
+            .catch(() => {
+              alert("Failed to copy signals.");
+            });
+        });
+
+      function generateSignals() {
+        const asset = document.getElementById("asset-select").value;
+        const accuracy = document.getElementById("accuracy-select").value;
+        const signalCount = document.getElementById("signal-count").value;
+        const filter = document.getElementById("filter-select").value;
+
+        let signals = [];
+        for (let i = 0; i < signalCount; i++) {
+          let direction = Math.random() > 0.5 ? "SMALL" : "BIG";
+          if (filter !== "ALL" && filter !== direction) {
+            continue;
+          }
+
+          let time = new Date();
+          time.setMinutes(time.getMinutes() + (i + 1) * 5);
+
+          // Formatting time in 12-hour format
+          signals.push({
+            time: time.toLocaleString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            }),
+            asset,
+            direction,
+            accuracy: `${accuracy}%`,
+          });
+        }
+
+        displaySignals(signals);
+      }
+
+      function displaySignals(signals) {
+        const signalList = document.getElementById("signal-list");
+        signals.forEach((signal) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = `${signal.time} - ${signal.asset} - ${signal.direction} (Accuracy: ${signal.accuracy})`;
+          signalList.appendChild(listItem);
+        });
+      }
+    </script>
+  </body>
+</html>
